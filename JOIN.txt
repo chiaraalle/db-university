@@ -1,0 +1,72 @@
+1. Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia
+
+SELECT *
+FROM students
+INNER JOIN degrees
+ON degrees.id = students.degree_id
+WHERE degrees.name = 'Corso Di Laurea in Economia'
+
+2. Selezionare tutti i Corsi di Laurea Magistrale del Dipartimento di
+Neuroscienze
+
+SELECT *
+FROM degrees
+INNER JOIN departments
+ON departments.id = degrees.department_id
+WHERE degrees.level = 'magistrale'
+AND departments.name = 'Dipartimento di Neuroscienze'
+
+3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
+SELECT *
+FROM course_teacher ct
+INNER JOIN teachers t
+ON ct.teacher_id = t.id
+INNER JOIN courses c
+ON ct.course_id = c.id
+WHERE t.name= 'Fulvio'
+AND t.surname = 'Amato'
+
+4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui
+sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e
+nome
+
+SELECT *
+FROM students st
+INNER JOIN degrees d
+ON d.id = st.degree_id
+INNER JOIN departments de
+ON de.id = d.department_id
+ORDER BY st.surname, st.name ASC
+
+
+5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
+
+SELECT *
+FROM degrees d
+INNER JOIN courses c
+ON d.id = c.degree_id
+INNER JOIN course_teacher ct
+ON ct.teacher_id = d.id
+INNER JOIN teachers t
+ON t.id = d.id
+
+
+6. Selezionare tutti i docenti che insegnano nel Dipartimento di
+Matematica (54)
+
+SELECT *
+FROM teachers t
+INNER JOIN courses c
+ON t.id = c.degree_id
+INNER JOIN course_teacher ct
+ON ct.teacher_id = t.id
+INNER JOIN degrees d
+ON t.id = d.id
+INNER JOIN departments de
+ON t.id = de.id
+WHERE de.name = 'Dipartimento di Matematica'
+
+
+7. BONUS: Selezionare per ogni studente il numero di tentativi sostenuti
+per ogni esame, stampando anche il voto massimo. Successivamente,
+filtrare i tentativi con voto minimo 18.
